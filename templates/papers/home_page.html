@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学术xx</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body>
+    <div id="indexBody">
+        <header>
+            <div id="head">
+                <nav>
+                    <span>学术</span>
+                    <ul id="headulleft">
+                        <li><a href="">首页</a></li>
+                        <li><a href="">发现</a></li>
+                        <li><a href="http://www.baidu.com">关注</a></li>
+                        <li><a href="mailto:x_jackzhang@qq.com">分类</a></li>
+                    </ul>
+
+                    <ul id="headulright">
+                        <li><img src="./resources/head.jpg"><a href="/users/login">你好，请登录</a></li>
+                        <li><a href="">评论</a></li>
+                        <li><a href="">私信</a></li>
+                    </ul>
+                </nav>
+                
+            </div>
+        </header>
+        <div id="mainBody">
+            <div id="searchBar">
+                <span>学术搜索</span>
+                <div class="scarch userform" >
+                    <form action="{% url 'papers:archives' %}" method="post">
+                    {% csrf_token %}
+                        {{ comment_form }}
+                        <input type="text" name="search_target" placeholder="发现新世界">
+                        <!--value="发现更大的世界" onfocus="javascript:if (this.value == '发现更大的世界')this.value = '';"-->
+
+                        <input type="submit" value="搜索">
+                        <div>
+                            <input type="checkbox" name="wanfang" value="万方" >万方<br/>
+                            <input type="checkbox" name="IEEE" value="IEEE">IEEE<br/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="hotPot">
+                <div>
+                    <span>热点·热词</span>
+                </div>
+                <div>
+                    <div id="hotPaper">
+                        <div>
+                            <span>热门文献</span>
+                        </div>
+                        <div id="hotPaperList">
+                            <a href="" id="hotPaper01">paper01</a>
+                            <a href="" id="hotPaper02">paper02</a>
+                            <a href="" id="hotPaper03">paper03</a>
+                            <a href="" id="hotPaper04">paper04</a>
+                            <a href="" id="hotPaper05">paper05</a>
+                        </div>
+                    </div>
+                    <div id="hotKey">
+                        <div>
+                            <span>热点关键词</span>
+                        </div>
+                        <div id="hotKeyList">
+                            <a href="" id="hotKey01">Key01</a>
+                            <a href="" id="hotKey02">Key02</a>
+                            <a href="" id="hotKey03">Key03</a>
+                            <a href="" id="hotKey04">Key04</a>
+                            <a href="" id="hotKey05">Key05</a>
+                            <a href="" id="hotKey06">Key06</a>
+                            <a href="" id="hotKey07">Key07</a>
+                            <a href="" id="hotKey08">Key08</a>
+                            <a href="" id="hotKey09">Key09</a>
+                            <a href="" id="hotKey10">Key10</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div id="friends">
+                <span>
+                    友链：
+                    <a href="">xx</a>
+                    <a href="">xxxx</a>
+                    <a href="">xxx</a>
+                </span>
+                
+            </div>
+            <div id="connection">
+                <span>
+                    联系我们：010-00000000；
+                    <a href="xxxxxxxx@bupt.edu.cn">xxxxxxxx@bupt.edu.cn</a>
+                </span>
+            </div>
+            <div id="adress">
+                <span>adress：xxxxxx  10000</span>
+            </div>
+            <div id="help">
+                <a href="">help</a>
+            </div>
+            <div class="copy">
+                版权所有 &copy BUPT - 2018
+            </div>
+        </footer>
+    </div>
+    
+</body>
+</html>

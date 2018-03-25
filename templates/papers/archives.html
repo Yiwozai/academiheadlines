@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+{% load papers_extras %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>搜索</title>
+    <link rel="stylesheet" type="text/css" href="css/result.css">
+
+</head>
+<body>
+	<div id="mainBody">
+		<header>
+            <div id="head">
+                <nav>
+                    <span>学术</span>
+                    <ul id="headulleft">
+                        <li><a href="">首页</a></li>
+                        <li><a href="">发现</a></li>
+                        <li><a href="http://www.baidu.com">关注</a></li>
+                        <li><a href="mailto:x_jackzhang@qq.com">分类</a></li>
+                    </ul>
+
+                    <div class="scarch userform" >
+                    <form action="{% url 'papers:archives' %}" method="post">
+                    {% csrf_token %}
+                        {{ comment_form }}
+                        <input type="text" name="search_target" placeholder="发现新世界">
+                        <!--value="发现更大的世界" onfocus="javascript:if (this.value == '发现更大的世界')this.value = '';"-->
+
+                        <input type="submit" value="搜索">
+                        <div>
+                            <input type="checkbox" name="wanfang" value="万方" >万方<br/>
+                            <input type="checkbox" name="IEEE" value="IEEE">IEEE<br/>
+                        </div>
+                    </form>
+                </div>
+
+
+                    <ul id="headulright">
+                        <li><img src="./resources/head.jpg"><a href="/users/login">你好，请登录</a></li>
+                        <li><a href="">评论</a></li>
+                        <li><a href="">私信</a></li>
+                    </ul>
+                </nav>
+                
+            </div>
+        </header>
+
+        <div id="resultList">
+
+			<!-- 输出的结果单个项目应有如下几项 -->
+        {% if search_article_list %}
+            {% for article in search_article_list %}
+            
+        	<div id="" class="paperLists">
+        		<div class="textBox">
+        			<!-- 论文类型：期刊论文/硕士论文/。。。 -->
+					<p>
+						<span class="typeOfPaper">期刊论文</span>
+                    <h3 class="title"><a href="{% url 'papers:paper' article.id %}">{{ article.dissertation }}</a></h3>
+					</p>
+        			<p class="mainpreview">
+                    	<span class="preview">摘要：</span>
+                    	{{ article.abstract }}
+                    	<!-- 当长度超过一定时显示详情按钮,可先不做，等后期使用动态页面实现 -->
+                    	<span class="previewDetailBtn">
+                    		查看全部
+                    	</span>
+                	</p>
+                	<div class="keywordList">
+                		<p>
+                			<span>关键词：</span>
+                			<!-- 按实际情况显示个数 -->
+                            {% for keyword in article.keywords|split_underline %}
+                			<span class="keyword">{{ keyword }}</span>
+                            {% endfor %}
+                			
+                		</p>
+                	</div>
+                	<div class="">
+                		<div class="author">
+                			<span>作者：</span>
+                            {% for author in article.author|split_underline %}
+                			<span class="authorName">{{ author }}</span>
+                            {% endfor %}
+                		</div>
+                		<div class="corporation">
+                			<span>作者单位：</span>
+                			<span class="">{{ article.author_unit }}</span>
+                		</div>
+                	</div>
+                	<div class="journalBox">
+                		<div class="journal">
+                			<span>刊名：</span>
+                			<span class="journalName">{{ article.journal }}</span>
+                		</div>
+                	</div>
+                	<div class="others">
+                		<div class="date">
+                			<span class="">
+                				日期：
+                			</span>
+                			<span class="datetime">
+                				{{ article.journal_date }}
+                			</span>
+                		</div>
+                	</div>
+                	<div class="communications">
+                		<ul>
+                			<li><a href="" class="comment"><img src="img/xxx.png">评论(<span class="count">12</span>)</a></li>
+            				<li><a href="" class="agree"><img src="img/xxx.png">有用(<span class="count">12</span>)</a></li>
+                		</ul>
+                	</div>
+        		</div>
+        	</div>
+            {% endfor %}
+        	<!-- 到此结束为一整个block，需要的话可以重复以上block -->
+
+        	<!-- 如果返回没有结果 -->
+            {% else %}
+        	<div>
+        		<p>很抱歉，您所请求的结果不存在！</p>
+        	</div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

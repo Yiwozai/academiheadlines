@@ -1,0 +1,14 @@
+﻿{% load i18n %}{% autoescape off %}
+你收到这封邮件是因为你正在 {{ site_name }} 注册账户.
+
+请点击下面的链接以完成验证：
+
+{{ fullurl }}
+
+你的用户名是：{{ user.get_username }}
+
+{% trans "Thanks for using our site!" %}
+
+{% blocktrans %}The {{ site_name }} team{% endblocktrans %}
+
+{% endautoescape %}

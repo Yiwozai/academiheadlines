@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>验证链接已经发送</title>
+	{% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'users/mobi.min.css' %}">
+</head>
+<body>
+<div class="flex-center">
+    <div class="container">
+        <div>
+            <h1 class="logo"><a href="{% url 'papers:home_page' %}">Django Auth Example</a></h1>
+            <h3>验证链接已经发送</h3>
+            <p>
+              邮件已发送至你的邮箱，请注意查收。
+            </p>
+            <p>
+              如果你没有收到邮件, 请确保输入的地址是正确的, 并检查垃圾邮件文件夹.
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
