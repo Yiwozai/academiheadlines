@@ -49,7 +49,7 @@ class User(AbstractBaseUser):
     # 领域、方向
     area = models.CharField('领域/方向', max_length=150, default='')
     # 关键词、标签（相关性推荐用）
-    # labels = models.CharField('标签', max_length=150, default='')
+    labels = models.CharField('标签', max_length=150, default='')
 
     EMAIL_FIELD = 'email'  # 描述模型中邮件字段的名称，该值可由get_email_field_name()返回
     USERNAME_FIELD = 'username'  # 这是唯一标识符字段的名称，字段必须是唯一的（即在其定义中设置unique=True）
@@ -59,7 +59,7 @@ class User(AbstractBaseUser):
         return self.username
 
     class Meta:
-        # db_table = 'users'
+        db_table = 'users'
         verbose_name = '用户'
         verbose_name_plural = '用户'
 

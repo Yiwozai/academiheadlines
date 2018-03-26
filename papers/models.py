@@ -48,8 +48,7 @@ class Recommended(models.Model):
     recommended_papers = models.CharField(max_length=2000, default='')
 
     class Meta:
-        abstract = True
-        # db_table = 'recommended'
+        db_table = 'recommended'
 
     def is_full(self):
         """返回推荐文章是否满队列

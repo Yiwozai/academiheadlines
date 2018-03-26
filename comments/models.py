@@ -19,5 +19,4 @@ class Comment(models.Model):
         return self.text[:20]
 
     class Meta:
-        pass
-        # db_table = 'comments'
+        db_table = 'comments'
