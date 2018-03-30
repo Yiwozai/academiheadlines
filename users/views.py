@@ -14,6 +14,34 @@ from .models import User
 from .forms import RegisterForm, ActivationForm
 
 
+# 新增，收藏文章
+def AddFavorite(request, article_id):
+    favorite = Favorite.create(user.id, article_id)
+    favorite.save()
+    return redirect(reverse('papers:paper', kwargs={'article_id': article_id}))
+
+
+# 新增，添加关注    
+def AddFriend(request, friend_id):
+    friend = Friend.create(user.id, friend_id)
+    friend.save()
+    return redirect(reverse('users:profile', kwargs={'user_id': friend_id}))
+
+
+# 新增，个人主页
+def ShowProfile(request, user_id):
+    other_user = User.objects.filter(id=user_id)
+    favorite_id = Favorite.article_id.filter(user_id=user_id)
+    favorite_list = Papers.objects.filter(id=favorite_id)
+    friend_id = Friend.friend_id.filter(user_id=user_id)
+    friend_list = User.objects.filter(id=friend_id)
+    return render(request, 'users/profile.html',
+                  context={'other_user': other_user, 'friend_list': friend_list, 'favorite_list': favorite_list})
+
+
+#    return redirect(reverse('users:profile', kwargs={'user': user,'friend_list': friend_list, 'favorite_list': favorite_list}))
+
+
 class RegisterView(View):
     # 指定表单和模板
     form_class = RegisterForm

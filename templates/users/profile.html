@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 本页是新增的 -->
+    <title>个人主页</title>
+</head>
+<body>
+<p>欢迎查看用户{{ other_user.username }}的个人主页！</p>
+
+<button class="btn btn-default"><a href="{% url 'users:friend' %}?friend_id={{ other_user.id }}">关注TA</a></button>
+
+<p>关注的用户</p>
+<ul>
+  {% for friend in friend_list %}
+  <li><a href="{% url 'users:profile' friend.id %}">{{ friend.username }}</li>
+  {% endfor %}
+</ul>
+
+<p>收藏的文章</p>
+<ul>
+  {% for paper in favorite_list %}
+  <li><a href="{% url 'papers:paper' paper.id %}">{{ paper.dissertation }}</li>
+  {% endfor %}
+</ul>
+
+</body>
+</html>

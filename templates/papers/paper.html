@@ -178,6 +178,10 @@
             <!--其他资源-->
         	</div>
             
+            <!-- 新增，收藏文章 -->
+            <button class="btn btn-default"><a href="{% url 'users:favorite' %}?article_id={{ article.id }}">收藏论文</a></button>
+  
+            
             {% if user.is_authenticated %}
             <form action="{% url 'comments:comment' %}" method="post" >
                 {% csrf_token %}
@@ -194,6 +198,20 @@
                     <button class="btn btn-default"><a href="{% url 'users:register' %}?next={{ request.path }}">注册</a></button>
                   </p>
             {% endif %}
+            
+            <!-- 新增，显示评论 -->
+            <ul>
+                {% for comment in comment_list %}
+                <li>
+                    <span><a href = "{% url 'users:profile' %}?user_id={{ comment.user_id }}">{{ comment.user_id}}</a></span>
+                    <time>{{ comment.created_time }}</time>
+                    <div>{{ comment.text }}</div>
+                </li>
+                {% empty %} 
+                暂无评论 
+                {% endfor %}
+            </ul>
+            
             
             <div class="reference">
             	<div class="subject">
