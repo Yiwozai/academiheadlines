@@ -1,5 +1,9 @@
-# academiheadlines_v1
+# academiheadlines
 
-yibo
-Ooo
-上传了的
+## 任务
+
+1. 鉴于爬虫无法爬取所有论文，不如直接采用数据返回（即搜索后即时返回）。
+
+2. 文章推荐。
+
+llll
