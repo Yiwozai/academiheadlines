@@ -17,5 +17,5 @@ urlpatterns = [
     # 新增，添加关注（好友）
     url(r'^friend/$', views.AddFriend, name='friend'),
     # 新增，个人主页
-    url(r'^profile/(?P<user_id>[0-9]+)/$', views.ShowProfile, name='profile'
+    url(r'^profile/(?P<user_id>[0-9]+)/$', views.ShowProfile, name='profile'),
 ]

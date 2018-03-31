@@ -76,7 +76,7 @@ class User(AbstractBaseUser):
 
 
 # 新增，收藏文章
-class Favorite(models.Model)
+class Favorite(models.Model):
     user_id = models.IntegerField()
     article_id = models.IntegerField()
 
@@ -85,9 +85,12 @@ class Favorite(models.Model)
         favorite = cls(user_id=user_id, article_id=article_id)
         return favorite
 
-
+    class Meta:
+        db_table = 'favorite'
+        
+        
 # 新增，好友。注意，好友只是单向的关注
-class Friend(models.Model)
+class Friend(models.Model):
     user_id = models.IntegerField()  # 发出关注动作的用户
     friend_id = models.IntegerField()  # 被关注的用户
 
