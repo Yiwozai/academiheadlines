@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-{% load papers_extras %}
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -83,7 +82,7 @@
                 	<li>
 		                <div class="info_left">关键词：</div>
 		            	<div class="info_right">
-                            {% for keyword in article.keywords|split_underline %}
+                            {% for keyword in article.keywords %}
 							<a href="" onclick="searchResult('perio','关键词:红芸豆')">{{ keyword }}</a>
                             {% endfor %}
 		                </div>
@@ -91,7 +90,7 @@
            			<li>
                 		<div class="info_left">Keyword：</div>
                 		<div class="info_right">
-                            {% for keyword_en in article.keywords_en|split_underline %}
+                            {% for keyword_en in article.keywords_en %}
 							<a href="" onclick="searchResult('perio','关键词:红芸豆')">{{ keyword_en }}</a>
                             {% endfor %}
                 		</div>
@@ -99,8 +98,8 @@
             		<li>
 	                	<div class="info_left">作者：</div>
 	                    	<div class="info_right">
-                                {% for author in article.author|split_underline %}		
-								<a id="card0" href="#" >author</a>
+                                {% for author in article.author %}		
+								<a id="card0" href="#" >{{ author }}</a>
                                 {% endfor %}
                                 
 	                    </div>

@@ -3,7 +3,7 @@
 from time import time
 from django.views import View
 from django.views.generic.edit import FormView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.sites.shortcuts import get_current_site
@@ -37,9 +37,7 @@ def ShowProfile(request, user_id):
     friend_list = User.objects.filter(id=friend_id)
     return render(request, 'users/profile.html',
                   context={'other_user': other_user, 'friend_list': friend_list, 'favorite_list': favorite_list})
-
-
-#    return redirect(reverse('users:profile', kwargs={'user': user,'friend_list': friend_list, 'favorite_list': favorite_list}))
+# return redirect(reverse('users:profile', kwargs={'user': user,'friend_list': friend_list, 'favorite_list': favorite_list}))
 
 
 class RegisterView(View):

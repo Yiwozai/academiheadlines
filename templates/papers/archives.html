@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load papers_extras %}
+
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -57,7 +57,7 @@
         			<!-- 论文类型：期刊论文/硕士论文/。。。 -->
 					<p>
 						<span class="typeOfPaper">期刊论文</span>
-                    <h3 class="title"><a href="{% url 'papers:paper' article.id %}">{{ article.dissertation }}</a></h3>
+                    <h3 class="title"><a href="{% url 'papers:paper' %}?url={{ article.url }}">{{ article.dissertation }}</a></h3>
 					</p>
         			<p class="mainpreview">
                     	<span class="preview">摘要：</span>
@@ -71,7 +71,7 @@
                 		<p>
                 			<span>关键词：</span>
                 			<!-- 按实际情况显示个数 -->
-                            {% for keyword in article.keywords|split_underline %}
+                            {% for keyword in article.keywords %}
                 			<span class="keyword">{{ keyword }}</span>
                             {% endfor %}
                 			
@@ -80,14 +80,11 @@
                 	<div class="">
                 		<div class="author">
                 			<span>作者：</span>
-                            {% for author in article.author|split_underline %}
+                            {% for author in article.author %}
                 			<span class="authorName">{{ author }}</span>
                             {% endfor %}
                 		</div>
-                		<div class="corporation">
-                			<span>作者单位：</span>
-                			<span class="">{{ article.author_unit }}</span>
-                		</div>
+
                 	</div>
                 	<div class="journalBox">
                 		<div class="journal">
