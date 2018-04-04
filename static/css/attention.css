@@ -1,0 +1,41 @@
+.mainlogo{
+	width: 100%;
+	margin: auto;
+}
+
+.mainlogo img{
+	display: block; 
+	margin:auto; 
+	padding-top: 50px;
+}
+
+.searchBar{
+	width: 100%；
+}
+
+.searchText{
+	height: 34px;
+	border-right: 0px
+}
+
+.searchSelect{
+	height: 34px;
+	border-left: 0px
+}
+
+.searchBtn{
+	height: 34px;
+}
+.delateBtn{
+	position:absolute;
+	width:50px;
+	height:50px;
+	border:0px;
+	right:15px;
+	top:0px;
+	z-index: 10;
+}
+.read-more a{
+	color: #0087f1;
+	font-weight: bold;
+}

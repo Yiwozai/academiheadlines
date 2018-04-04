@@ -127,6 +127,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
 AUTH_USER_MODEL = 'users.User'
 LOGOUT_REDIRECT_URL = '/'  # LoginView在注销成功后，如果没有'next'跳转的位置
 LOGIN_REDIRECT_URL = '/'  # LoginView在登入成功后，如果没有'next'跳转的位置

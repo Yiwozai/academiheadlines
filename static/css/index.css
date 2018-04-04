@@ -1,0 +1,44 @@
+
+.mainlogo{
+	width: 100%;
+	margin: auto;
+}
+
+.mainlogo img{
+	display: block; 
+	margin:auto; 
+	padding-top: 50px;
+}
+
+.searchBar{
+	width: 100%；
+}
+
+.searchText{
+	height: 34px;
+	border-right: 0px
+}
+
+.searchSelect{
+	height: 34px;
+	border-left: 0px
+}
+
+.searchBtn{
+	height: 34px;
+}
+
+.widgetAbove{
+	border-bottom: 0px;
+}
+
+.hotKey{
+
+}
+
+footer{
+	/*position: fixed;*/
+	margin-top: 0px;
+	bottom: 0px;
+	width: 100%
+}

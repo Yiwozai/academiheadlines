@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>发现-学术头条</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/nprogress.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+	<link rel="apple-touch-icon-precomposed" href="{% static 'images/icon/icon.png' %}">
+	<link rel="shortcut icon" href="{% static 'images/icon/favicon.ico' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'plugin/h-ui/css/H-ui.min.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'plugin/Hui-iconfont/1.0.8/iconfont.min.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/result.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'plugin/pifu/pifu.css' %}" />
+	<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+	<script src="{% static 'js/nprogress.js' %}"></script>
+	<script src="{% static 'js/jquery.lazyload.min.js' %}"></script>
+	<script src="{% static 'http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js' %}"></script>
+	<!--[if gte IE 9]>
+	  <script src="{% static 'js/jquery-1.11.1.min.js' %}" type="text/javascript"></script>
+	  <script src="{% static 'js/html5shiv.min.js' %}" type="text/javascript"></script>
+	  <script src="{% static 'js/respond.min.js' %}" type="text/javascript"></script>
+	  <script src="{% static 'js/selectivizr-min.js' %}" type="text/javascript"></script>
+	<![endif]-->
+	<!--[if lt IE 9]>
+	  <script>window.location.href='upgrade-browser.html';</script>
+	<![endif]-->
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } function showSide(){$('.navbar-nav').toggle();}</script>
+</head>
+<body>
+	<!-- 顶栏设计 -->
+	<header class="navbar-wrapper">
+	    <div class="navbar navbar-fixed-top">
+	        <div class="container cl">
+	        	<!-- 顶栏logo -->
+	            <a class="navbar-logo hidden-xs" href="index.html">
+	                <img class="logo" src="{% static 'images\icon\icon0.png' %}" alt="学术头条" />
+	            </a>
+
+	            <a class="logo navbar-logo-m visible-xs mylogo" href="" >学术头条</a>
+	            <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:void(0);" onclick="showSide();">&#xe667;</a>
+	            <!-- 菜单栏 -->
+	            <nav class="nav navbar-nav nav-collapse w_menu" role="navigation">
+	                <ul class="cl">
+	                    <li class="active"> <a href="" data-hover="首页">首页</a> </li>
+	                    <li> <a href="/explore" data-hover="发现">发现</a> </li>
+	                    <li> <a href="" data-hover="关注">关注</a> </li>
+	                    <li><a href="" data-hover="分类">分类</a></li>
+	                </ul>
+	            </nav>
+
+	            <nav class="navbar-nav navbar-userbar hidden-xs hidden-sm " style="top: 0;">
+	                <ul class="cl">
+	                    <li class="userInfo dropDown dropDown_hover">
+	                            <!--<a href="javascript:;" ><img class="avatar radius" src="img/40.jpg" alt="丶似浅 "></a>
+	                            <ul class="dropDown-menu menu radius box-shadow">
+	                                <li><a href="/app/loginOut">退出</a></li>
+	                            </ul>-->
+	                            <a href="/users/login" onclick="layer.msg('正在登入', {icon:16, shade: 0.1, time:0})" ><img class="avatar size-S" src="{% static 'images\baoman\baoman_01.gif' %}" title="登入">Hi,请登录</a>
+	                    </li>
+	                </ul>
+	            </nav>
+
+	        </div>
+	    </div>
+	</header>
+	<div class="widget">
+		<div class="widget widget_search widgetAbove">
+			<!-- 主logo -->
+			<div class="mainlogo">
+				<img src="{% static 'images\logo.png' %}">
+			</div>
+			<!-- 搜索栏 -->
+			<div class="searchBar container">
+				<form class="navbar-form" action="{% url 'papers:archives' %}" method="post">
+                    {% csrf_token %}
+		         	<div class="input-group col-md-6 col-md-offset-3">
+			            <input type="text" name="search_target" class="form-control searchText" size="40" placeholder="请输入关键字" maxlength="15" autocomplete="off">
+			            
+			            <span class="input-group-btn">
+			            	<select name="source" class="form-control searchSelect">
+								<option value="wanfang" selected>万方</option>
+								<option value="IEEE">IEEE</option>
+								<option value="zhiwang">知网</option>
+							</select>
+			            	<button class="btn btn-default searchBtn" name="search" type="submit">搜 索</button>
+			            </span> 
+		        	</div>
+		        </form>
+			</div>
+	        
+	    </div>
+			<section class="container pt-20">
+			<!--<div class="Huialert Huialert-info"><i class="Hui-iconfont">&#xe6a6;</i>成功状态提示</div>-->
+		  	<!--left-->
+		  		<div class="col-sm-9 col-md-9">
+		  		
+			  		<div class="btn-group">
+						<button type="button" class="btn btn-primary">最新文献</button>
+						<button type="button" class="btn btn-primary dropdown-toggle" 
+								data-toggle="dropdown">
+							<span class="caret"></span>
+							<span class="sr-only">切换下拉菜单</span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="explore_hot.html">热门文献</a></li>
+						</ul>
+					</div>
+
+				<!-- 文章主体-->
+				<div class="art_content">
+					<ul class="index_arc">
+						<!-- 这是返回的一个搜索结果 -->
+						<li class="index_arc_item no_pic">
+							<h4 class="title"><a href="detail.html">[<span>期刊论文</span>] 基于增强学习的5G网络切片资源动态优化方案</a></h4>
+							<div class="date_hits">
+								<span><strong>关键词：</strong></span>
+								<span><a href="">5G</a></span>
+								<span><a href="">网络切片</a></span>
+								<span><a href="">增强学习</a></span>
+								<span><a href="">动态优化</a></span>
+								<p class="hits0"><i class="Hui-iconfont" title="热度">&#xe6c1;</i> 555°</p>
+								<p class="hits1"><i class="Hui-iconfont" title="评论">&#xe622;</i> 223</p>
+								<p class="hits2"><i class="Hui-iconfont" title="点赞">&#xe697;</i> 1321</p>
+								<p class="commonts"><i class="Hui-iconfont" title="收藏">&#xe69e;</i> <span id="" class="cy_cmt_count">5</span></p>
+							</div>
+							<div class="desc wrap">
+							    <div>
+							    	<div class="date_hits">
+							    		<span><strong>作者：</strong></span>
+										<span><a href="">任语铮</a></span>
+										<span><a href="">谢人超</a></span>
+                                        <span><a href="">黄韬</a></span>
+										<span><strong>作者单位：</strong></span>
+										<span><a href="">北京邮电大学,北京,100876</a></span>
+							    	</div>
+							    	<p><span><strong>摘要：</strong></span>提出了一种基于增强学习的网络切片资源动态优化方案.使用该方案动态调整网络切片资源时,通过考虑未来网络切片中的业务流量变化情况,对业务流量进行预测,从而推断出未来网络资源的划分情况;再通过增强学习算法,使得未来时刻的网络资源划分状态对当前划分策略做出影响,从而得到当前的最佳策略.基于该算法,可以保证在资源分配过程中对网络需求变化做出快速响应,并通过仿真进行了验证.</p>
+							    </div>
+							    <div class="gradient"></div>
+							</div>
+							<div class="read-more"></div>
+						</li>
+
+						<!-- 这是返回的另一个搜索结果 -->
+
+		          		<li class="index_arc_item no_pic">
+							<h4 class="title"><a href="detail.html">[<span>期刊论文</span>] 基于Gabor和HOG的新型人脸识别算法</a></h4>
+							<div class="date_hits">
+								<span><strong>关键词：</strong></span>
+								<span><a href="">人脸识别</a></span>
+								<span><a href="">Gobor滤波</a></span>
+								<span><a href="">方向梯度直方图</a></span>
+								<span><a href="">Zernike矩</a></span>
+								<p class="hits0"><i class="Hui-iconfont" title="热度">&#xe6c1;</i> 235°</p>
+								<p class="hits1"><i class="Hui-iconfont" title="评论">&#xe622;</i> 34</p>
+								<p class="hits2"><i class="Hui-iconfont" title="点赞">&#xe697;</i> 921</p>
+								<p class="commonts"><i class="Hui-iconfont" title="收藏">&#xe69e;</i> <span id="" class="cy_cmt_count">5</span></p>
+							</div>
+							<div class="desc wrap">
+							    <div>
+							    	<div class="date_hits">
+							    		<span><strong>作者：</strong></span>
+										<span><a href="">嵇新浩</a></span>
+										<span><strong>作者单位：</strong></span>
+										<span><a href="">华东师范大学教育专业学位管理中心,上海200062;浙江商业职业技术学院信息办公室,杭州310053</a></span>
+							    	</div>
+							    	<p><span><strong>摘要：</strong></span>人脸识别中特征提取是人脸识别过程中的主要步骤之一,特征提取效果极大地影响着识别的精度.在目前的大多数人脸识别方法中,仅仅提取、利用了面部区域的局部特征.为提高人脸识别精度,本文提出了一种新的人脸识别方案(GF-LF),该方案先在Gabor滤波器的输出结果基础上应用Zernike矩,得到一种新的全局特征描述符,再利用方向梯度直方图(HOG)获取局部特征,最后将全局特征与局部有效特征相结合构成人脸识别的最终特征.在ORL和Yale人脸识别数据库上测试表明,该方法的人脸识别率达到96％,优于目前大多数的人脸识别方法.</p>
+							    </div>
+							    <div class="gradient"></div>
+							</div>
+							<div class="read-more"></div>
+						</li>
+
+						<!-- 这是返回的另一个搜索结果 -->
+
+						<li class="index_arc_item no_pic">
+							<h4 class="title"><a href="detail.html">[<span>期刊论文</span>] 基于有监督分词方法的维吾尔文情感分析</a></h4>
+							<div class="date_hits">
+								<span><strong>关键词：</strong></span>
+								<span><a href="">分词</a></span>
+								<span><a href="">维吾尔文</a></span>
+								<span><a href="">情感分析</a></span>
+								<span><a href="">信息增益</a></span>
+								<p class="hits0"><i class="Hui-iconfont" title="热度">&#xe6c1;</i> 555°</p>
+								<p class="hits1"><i class="Hui-iconfont" title="评论">&#xe622;</i> 223</p>
+								<p class="hits2"><i class="Hui-iconfont" title="点赞">&#xe697;</i> 1321</p>
+								<p class="commonts"><i class="Hui-iconfont" title="收藏">&#xe69e;</i> <span id="" class="cy_cmt_count">5</span></p>
+							</div>
+							<div class="desc wrap">
+							    <div>
+							    	<div class="date_hits">
+							    		<span><strong>作者：</strong></span>
+										<span><a href="">伊尔夏提·吐尔贡</a></span>
+										<span><a href="">吾守尔·斯拉木</a></span>
+										<span><a href="">热西旦木·吐尔洪太</a></span>
+										<span><strong>作者单位：</strong></span>
+										<span><a href="">新疆大学信息科学与工程学院,新疆乌鲁木齐,830046</a></span>
+							    	</div>
+							    	<p><span><strong>摘要：</strong></span> 为提高雏吾尔文情感分析的准确率,提出一种基于信息增益的有监督雏吾尔文分词方法,并将其用在情感分析中,避免传统空格分词方法造成的雏数灾难和特征项语义不完整等问题.实验结果表明,用该分词方法得到的特征空间规模更小,在此特征空间上训练出来的模型性能更好,能够有效提高雏吾尔文情感分析的准确率.  </p>
+							    </div>
+							    <div class="gradient"></div>
+							</div>
+							<div class="read-more"></div>
+						</li>
+
+					</ul>
+				    <div class="quotes">
+				    	<span class="disabled">首页</span>
+				    	<span class="disabled">上一页</span>
+				    	<a class="current">1</a>
+				    	<a href="">2</a>
+				    	<span class="disabled">下一页</span>
+				    	<span class="disabled">尾页</span>
+				    </div>
+				</div>
+		  	</div>
+		  
+		  <!--right-->
+		 	<div class="col-sm-3 col-md-3">
+		  	
+		  	<!--站点声明-->
+		        <div class="panel panel-default mb-20">
+		        	<div class="tab-category">
+		                <a href=""><strong>公告</strong></a>
+		            </div>
+		            <div class="tab-category-item">
+		                
+		                <div class="slideTxtBox">
+		                    <div class="bd">
+		                        <ul>
+		                            <li><i class="Hui-iconfont" style="float: left;">&#xe62f;&nbsp;</i>学术头条测试版上线，欢迎访问</a></li>
+		                            <li><i class="Hui-iconfont" style="float: left;">&#xe62f;&nbsp;</i>内容如有侵犯，请立即联系管理员删除</a></li>
+		                            <li><i class="Hui-iconfont" style="float: left;">&#xe62f;&nbsp;</i>本站内容仅供学习和参阅，不做任何商业用途</a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		  	
+			  	<!--热门推荐-->
+			  	<div class="bg-fff box-shadow radius mb-20">
+					<div class="tab-category">
+						<a href=""><strong>热门推荐</strong></a>
+					</div>
+					<div class="tab-category-item">
+						<ul class="index_recd">
+							<li>
+								<a href="#">光纤量子通信网络路由选择协议</a>
+								<p class="hits"><i class="Hui-iconfont" title="点击量">&#xe6c1;</i> 276 </p>
+							</li>
+							<li >
+								<a href="#">面向可穿戴设备的数据安全隐私保护技术综述</a>
+								<p class="hits"><i class="Hui-iconfont" title="点击量">&#xe6c1;</i> 276 </p>
+							</li>
+							<li >
+								<a href="#">基于虚拟现实的三维动态场景重建</a>
+								<p class="hits"><i class="Hui-iconfont" title="点击量">&#xe6c1;</i> 276 </p>
+							</li>
+							<li >
+								<a href="#">基于单片机的无人机变量控制系统的设计</a>
+								<p class="hits"><i class="Hui-iconfont" title="点击量">&#xe6c1;</i> 276 </p>
+							</li>
+							<li >
+								<a href="#">基于深度神经网络的命名实体识别方法研究</a>
+								<p class="hits"><i class="Hui-iconfont" title="点击量">&#xe6c1;</i> 276 </p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+				<!--标签-->
+				<div class="bg-fff box-shadow radius mb-20">
+					<div class="tab-category">
+						<a href=""><strong>热门标签</strong></a>
+					</div>
+					<div class="tab-category-item">
+						<div class="tags"> 
+							<a href="">数据挖掘</a> 
+							<a href="">对等网络</a> 
+							<a href="">Bi-RNN</a> 
+							<a href="">NOMA</a> 
+							<a href="">近场通信NFC</a> 
+							<a href="">BP网络</a> 
+							<a href="">数据可视化</a> 
+							<a href="">视频4K技术</a> 
+							<a href="">情景感知</a> 
+							<a href="">同时同频全双工</a> 
+							<a href="">无人驾驶</a> 
+						</div>
+					</div>
+				</div>
+				
+				<!--友情链接-->
+				<div class="bg-fff box-shadow radius mb-20">
+					<div class="tab-category">
+						<a href=""><strong>友情链接</strong></a>
+					</div>
+					<div class="tab-category-item">
+						<span><i class="Hui-iconfont">&#xe6f1;</i><a href="https://bbs.byr.cn" class="btn-link">北邮人论坛</a></span>
+						<span><i class="Hui-iconfont">&#xe6f1;</i><a href="http://tv.byr.cn" class="btn-link">北邮IPTV</a></span>
+						<span><i class="Hui-iconfont">&#xe6f1;</i><a href="http://bt.byr.cn" class="btn-link">北邮人BT</a></span>
+					</div>
+				</div>
+
+				<!--分享-->
+		        <div class="bg-fff box-shadow radius mb-20">
+		            <div class="tab-category">
+		                <a href=""><strong>站点分享</strong></a>
+		            </div>
+		            <div class="tab-category-item">
+		                <div class="bdsharebuttonbox Hui-share">
+		                	<a href="#" class="bds_weixin Hui-iconfont" data-cmd="weixin" title="分享到微信">&#xe694;</a>
+		                	<a href="#" class="bds_sqq Hui-iconfont" data-cmd="sqq" title="分享到QQ好友">&#xe67b;</a> 
+		                	<a href="#" class="bds_tsina Hui-iconfont" data-cmd="tsina" title="分享到新浪微博">&#xe6da;</a> 
+		                </div>
+		            </div>
+		        </div>
+
+		  	</div>
+		  
+		</section>
+	    
+	</div>
+	<footer class="footer mt-20" >
+	    <div class="container-fluid" id="foot">
+	        <p>Copyright &copy; 2017-2018 www.xstt.com <br>
+	            <a href="#" target="_blank">京ICP备00000000号</a>  联系我们：<a href=mailto:xxxxxxxx@bupt.edu.cn target="_blank">xxxxxxxx@bupt.edu.cn</a><br>
+	        </p>
+	    </div>
+	</footer>
+	<script type="text/javascript" src="plugin/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="plugin/layer/3.0/layer.js"></script>
+	<script type="text/javascript" src="plugin/h-ui/js/H-ui.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script src="js/bootstrap.min.js"></script> 
+	<script src="js/jquery.ias.js"></script> 
+	<script src="js/scripts.js"></script>
+	<script> $(function(){ $(window).on("scroll",backToTopFun); backToTopFun(); }); </script>
+	<script type="text/javascript">
+		$(function(){
+ 		var slideHeight = 95; // px
+ 		$('.read-more').each(function(){
+ 			var defHeight = $(this).siblings('.wrap').height();
+	 		if(defHeight >= slideHeight){
+			  	$(this).siblings('.wrap').css('height' , slideHeight + 'px');
+			  	$(this).append('<a href=".">点击查看更多</a>');
+			  	$(this).children('a').click(function(){
+				   	var curHeight = $(this).parent().siblings('.wrap').height();
+				   	if(curHeight == slideHeight){
+					    $(this).parent().siblings('.wrap').animate({
+					        height: defHeight
+				    	}, "normal");
+				    	$(this).html('点击隐藏');
+				    	$(this).parent().siblings('.wrap .gradient').fadeOut();
+				    }else{
+					    $(this).parent().siblings('.wrap').animate({
+					     	height: slideHeight
+					    }, "normal");
+					    $(this).html('点击查看更多');
+					    $(this).parent().siblings('.wrap .gradient').fadeIn();
+				    }
+				    return false;
+			    });  
+			}
+		});
+ 		})
+	</script>
+	<script>
+	$(function(){
+	//标签大小随机
+		$(".tags a").each(function(){
+			var x = 9;
+			var y = 0;
+			var rand = parseInt(Math.random() * (x - y + 1) + y);
+			$(this).addClass("tags"+rand)
+		});
+		
+		$("img.lazyload").lazyload({failurelimit : 3});
+	});
+
+	</script> 
+</body>
+</html>

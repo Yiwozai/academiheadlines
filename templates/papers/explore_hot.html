@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>发现-学术头条</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/nprogress.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+	<link rel="apple-touch-icon-precomposed" href="{% static 'images/icon/icon.png' %}">
+	<link rel="shortcut icon" href="{% static 'images/icon/favicon.ico' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'plugin/h-ui/css/H-ui.min.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'plugin/Hui-iconfont/1.0.8/iconfont.min.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/result.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'plugin/pifu/pifu.css' %}" />
+	<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+	<script src="{% static 'js/nprogress.js' %}"></script>
+	<script src="{% static 'js/jquery.lazyload.min.js' %}"></script>
+	<script src="{% static 'http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js' %}"></script>
+	<!--[if gte IE 9]>
+	  <script src="{% static 'js/jquery-1.11.1.min.js' %}" type="text/javascript"></script>
+	  <script src="{% static 'js/html5shiv.min.js' %}" type="text/javascript"></script>
+	  <script src="{% static 'js/respond.min.js' %}" type="text/javascript"></script>
+	  <script src="{% static 'js/selectivizr-min.js' %}" type="text/javascript"></script>
+	<![endif]-->
+	<!--[if lt IE 9]>
+	  <script>window.location.href='upgrade-browser.html';</script>
+	<![endif]-->
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } function showSide(){$('.navbar-nav').toggle();}</script>
+</head>
+<body>
+	<!-- 顶栏设计 -->
+	<header class="navbar-wrapper">
+	    <div class="navbar navbar-fixed-top">
+	        <div class="container cl">
+	        	<!-- 顶栏logo -->
+	            <a class="navbar-logo hidden-xs" href="">
+	                <img class="logo" src="{% static 'images\icon\icon0.png' %}" alt="学术头条" />
+	            </a>
+
+	            <a class="logo navbar-logo-m visible-xs mylogo" href="index.html" >学术头条</a>
+	            <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:void(0);" onclick="showSide();">&#xe667;</a>
+	            <!-- 菜单栏 -->
+	            <nav class="nav navbar-nav nav-collapse w_menu" role="navigation">
+	                <ul class="cl">
+	                    <li class="active"> <a href="" data-hover="首页">首页</a> </li>
+	                    <li> <a href="/explore" data-hover="发现">发现</a> </li>
+	                    <li> <a href="" data-hover="关注">关注</a> </li>
+	                    <li><a href="" data-hover="分类">分类</a></li>
+	                </ul>
+	            </nav>
+
+	            <nav class="navbar-nav navbar-userbar hidden-xs hidden-sm " style="top: 0;">
+	                <ul class="cl">
+	                    <li class="userInfo dropDown dropDown_hover">
+	                            <!--<a href="javascript:;" ><img class="avatar radius" src="img/40.jpg" alt="丶似浅 "></a>
+	                            <ul class="dropDown-menu menu radius box-shadow">
+	                                <li><a href="/app/loginOut">退出</a></li>
+	                            </ul>-->
+	                            <a href="/users/login" onclick="layer.msg('正在登入', {icon:16, shade: 0.1, time:0})" ><img class="avatar size-S" src="{% static 'images\baoman\baoman_01.gif' %}" title="登入">Hi,请登录</a>
+	                    </li>
+	                </ul>
+	            </nav>
+
+	        </div>
+	    </div>
+	</header>
+	<div class="widget">
+		<div class="widget widget_search widgetAbove">
+			<!-- 主logo -->
+			<div class="mainlogo">
+				<img src="{% static 'images\logo.png' %}">
+			</div>
+			<!-- 搜索栏 -->
+			<div class="searchBar container">
+				<form class="navbar-form" action="{% url 'papers:archives' %}" method="post">
+                    {% csrf_token %}
+		         	<div class="input-group col-md-6 col-md-offset-3">
+			            <input type="text" name="search_target" class="form-control searchText" size="40" placeholder="请输入关键字" maxlength="15" autocomplete="off">
+			            
+			            <span class="input-group-btn">
+			            	<select name="source" class="form-control searchSelect">
+								<option value="wanfang" selected>万方</option>
+								<option value="IEEE">IEEE</option>
+								<option value="zhiwang">知网</option>
+							</select>
+			            	<button class="btn btn-default searchBtn" name="search" type="submit">搜 索</button>
+			            </span> 
+		        	</div>
+		        </form>
+			</div>
+	        
+	    </div>
+			<section class="container pt-20">
+			<!--<div class="Huialert Huialert-info"><i class="Hui-iconfont">&#xe6a6;</i>成功状态提示</div>-->
+		  	<!--left-->
+		  		<div class="col-sm-9 col-md-9">
+		  		
+			  		<div class="btn-group">
+						<button type="button" class="btn btn-primary">热门文献</button>
+						<button type="button" class="btn btn-primary dropdown-toggle" 
+								data-toggle="dropdown">
+							<span class="caret"></span>
+							<span class="sr-only">切换下拉菜单</span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="explore.html">最新文献</a></li>
+						</ul>
+					</div>
+
+				<!-- 文章主体-->
+				<div class="art_content">
+					<ul class="index_arc">
+						<!-- 这是返回的一个搜索结果 -->
+						<li class="index_arc_item no_pic">
+							<h4 class="title"><a href="detail.html">[<span>期刊论文</span>] 时空嵌入式生成对抗网络的地点预测方法</a></h4>
+							<div class="date_hits">
+								<span><strong>关键词：</strong></span>
+								<span><a href="">地点预测</a></span>
+								<span><a href="">时空嵌入</a></span>
+								<span><a href="">长短时记忆模型</a></span>
+								<span><a href="">卷积神经网络</a></span>
+                                <span><a href="">生成对抗网络</a></span>
+								<p class="hits0"><i class="Hui-iconfont" title="热度">&#xe6c1;</i> 555°</p>
+								<p class="hits1"><i class="Hui-iconfont" title="评论">&#xe622;</i> 223</p>
+								<p class="hits2"><i class="Hui-iconfont" title="点赞">&#xe697;</i> 1321</p>
+								<p class="commonts"><i class="Hui-iconfont" title="收藏">&#xe69e;</i> <span id="" class="cy_cmt_count">5</span></p>
+							</div>
+							<div class="desc wrap">
+							    <div>
+							    	<div class="date_hits">
+							    		<span><strong>作者：</strong></span>
+										<span><a href="">孔德江</a></span>
+										<span><a href="">汤斯亮</a></span>
+										<span><a href="">吴飞</a></span>
+										<span><strong>作者单位：</strong></span>
+										<span><a href="">浙江大学 计算机科学与技术学院 杭州310000</a></span>
+							    	</div>
+							    	<p><span><strong>摘要：</strong></span>定位技术的广泛使用可以积累大量的用户轨迹信息,为挖掘用户的行为轨迹提供便利.地点预测任务是众多基于位置服务的基础,学者们更关注如何有效利用这些轨迹数据进行地点预测.已有的方法或关注对长期模式(数天或数月)的预测,或致力于实时轨迹预测.文中研究的问题基于上述两者之间,即对弱实时条件下(数分钟或数小时)用户下一步的访问行为进行预测.为此,提出时空嵌入式的生成对抗网络模型(ST-GAN),在序列生成对抗网络的基础上,提出时空嵌入式长短时记忆生成模型(ST-LSTM)和时空嵌入式卷积神经网络判别模型(ST-CNN).ST-LSTM利用时空信息引导LSTM训练门机制,缓解数据的稀疏性.ST-CNN利用时空信息增强判别真伪访问序列的能力.此外,ST-GAN的训练优化机制使模型可以生成更多逼近真实的数据以引导模型学习,从而得到更好的预测效果.最后在真实的轨迹数据集上的实验验证ST-GAN的有效性.</p>
+							    </div>
+							    <div class="gradient"></div>
+							</div>
+							<div class="read-more"></div>
+						</li>
+
+						<!-- 这是返回的另一个搜索结果 -->
+
+		          		<li class="index_arc_item no_pic">
+							<h4 class="title"><a href="detail.html">[<span>期刊论文</span>] 基于Seq2Seq的生成式自动问答系统应用与研究</a></h4>
+							<div class="date_hits">
+								<span><strong>关键词：</strong></span>
+								<span><a href="">自动问答系统</a></span>
+								<span><a href="">自然语言处理</a></span>
+								<span><a href="">深度学习</a></span>
+								<span><a href="">回复式神经网络</a></span>
+								<p class="hits0"><i class="Hui-iconfont" title="热度">&#xe6c1;</i> 555°</p>
+								<p class="hits1"><i class="Hui-iconfont" title="评论">&#xe622;</i> 223</p>
+								<p class="hits2"><i class="Hui-iconfont" title="点赞">&#xe697;</i> 1321</p>
+								<p class="commonts"><i class="Hui-iconfont" title="收藏">&#xe69e;</i> <span id="" class="cy_cmt_count">5</span></p>
+							</div>
+							<div class="desc wrap">
+							    <div>
+							    	<div class="date_hits">
+							    		<span><strong>作者：</strong></span>
+										<span><a href="">李武波</a></span>
+										<span><a href="">张蕾</a></span>
+										<span><a href="">舒鑫</a></span>
+										<span><strong>作者单位：</strong></span>
+										<span><a href="">四川大学计算机学院,成都,610065</a></span>
+							    	</div>
+							    	<p><span><strong>摘要：</strong></span>由于要处理复杂的推理问题,同时要求处理输入序列生成输出序列,生成式自动问答系统被视为成为自然语言处理中一项困难的任务.Seq2Seq模型的提出为序列到序列的生成模型提供一个新的结构基础.基于Seq2Seq基础结构设计并实现一个轻量级的生成式自动问答模型.通过一个综合检验自动问答系统性能的数据集bAbI-10k,验证与分析基于Seq2Seq的生成式自动问答系统模型在20种不同类型的推理任务上性能.</p>
+							    </div>
+							    <div class="gradient"></div>
+							</div>
+							<div class="read-more"></div>
+						</li>
+
+						<!-- 这是返回的另一个搜索结果 -->
+
+						<li class="index_arc_item no_pic">
+							<h4 class="title"><a href="detail.html">[<span>期刊论文</span>] 基于支持向量回归机的RFID室内定位研究</a></h4>
+							<div class="date_hits">
+								<span><strong>关键词：</strong></span>
+								<span><a href="">RFID</a></span>
+								<span><a href="">支持向量回归机</a></span>
+								<span><a href="">互耦效应</a></span>
+                                <span><a href="">多径效应</a></span>
+								<p class="hits0"><i class="Hui-iconfont" title="热度">&#xe6c1;</i> 555°</p>
+								<p class="hits1"><i class="Hui-iconfont" title="评论">&#xe622;</i> 223</p>
+								<p class="hits2"><i class="Hui-iconfont" title="点赞">&#xe697;</i> 1321</p>
+								<p class="commonts"><i class="Hui-iconfont" title="收藏">&#xe69e;</i> <span id="" class="cy_cmt_count">5</span></p>
+							</div>
+							<div class="desc wrap">
+							    <div>
+							    	<div class="date_hits">
+							    		<span><strong>作者：</strong></span>
+										<span><a href="">尹强</a></span>
+										<span><a href="">佐磊</a></span>
+										<span><a href="">何怡刚</a></span>
+                                        <span><a href="">刘东洋</a></span>
+                                        <span><a href="">李亚</a></span>
+										<span><strong>作者单位：</strong></span>
+										<span><a href="">合肥工业大学电气与自动化工程学院,安徽合肥,230009</a></span>
+							    	</div>
+							    	<p><span><strong>摘要：</strong></span>基于接收信号强度的射频识别(RFID)定位是一种低成本、便于实现的室内定位方法,针对在RFID室内定位系统中使用参考标签法存在的小样本问题,提出一种基于支持向量回归机(SVR)的RFID室内定位算法.结合无源超高频RFID系统工作原理,在Matlab环境下,对比经典的LANDMARC方法,测试了基于支持向量回归机的定位算法性能,以及互耦效应、多径效应对该算法定位结果的影响.仿真结果表明,相较于LANDMARC方法,所提方法在不增加参考标签数量的情况下定位精度至少提高了25％.</p>
+							    </div>
+							    <div class="gradient"></div>
+							</div>
+							<div class="read-more"></div>
+						</li>
+
+					</ul>
+				    <div class="quotes">
+				    	<span class="disabled">首页</span>
+				    	<span class="disabled">上一页</span>
+				    	<a class="current">1</a>
+				    	<a href="">2</a>
+				    	<span class="disabled">下一页</span>
+				    	<span class="disabled">尾页</span>
+				    </div>
+				</div>
+		  	</div>
+		  
+		  <!--right-->
+		 	<div class="col-sm-3 col-md-3">
+		  	
+		  	<!--站点声明-->
+		        <div class="panel panel-default mb-20">
+		        	<div class="tab-category">
+		                <a href=""><strong>公告</strong></a>
+		            </div>
+		            <div class="tab-category-item">
+		                
+		                <div class="slideTxtBox">
+		                    <div class="bd">
+		                        <ul>
+		                            <li><i class="Hui-iconfont" style="float: left;">&#xe62f;&nbsp;</i>学术头条测试版上线，欢迎访问</a></li>
+		                            <li><i class="Hui-iconfont" style="float: left;">&#xe62f;&nbsp;</i>内容如有侵犯，请立即联系管理员删除</a></li>
+		                            <li><i class="Hui-iconfont" style="float: left;">&#xe62f;&nbsp;</i>本站内容仅供学习和参阅，不做任何商业用途</a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		  	
+			  	<!--热门推荐-->
+			  	<div class="bg-fff box-shadow radius mb-20">
+					<div class="tab-category">
+						<a href=""><strong>热门推荐</strong></a>
+					</div>
+					<div class="tab-category-item">
+						<ul class="index_recd">
+							<li>
+								<a href="#">基于压缩感知的多小区MASSIVE MIMO信道估计</a>
+								<p class="hits"><i class="Hui-iconfont" title="点击量">&#xe6c1;</i> 276 </p>
+							</li>
+							<li >
+								<a href="#">超密集组网中基于上行容量分析的增强型动态分簇算法</a>
+								<p class="hits"><i class="Hui-iconfont" title="点击量">&#xe6c1;</i> 276 </p>
+							</li>
+							<li >
+								<a href="#">基于NB-IoT的温室温度智能调控系统设计与实现</a>
+								<p class="hits"><i class="Hui-iconfont" title="点击量">&#xe6c1;</i> 276 </p>
+							</li>
+							<li >
+								<a href="#">基于循环神经网络的OFDM系统的失真补偿</a>
+								<p class="hits"><i class="Hui-iconfont" title="点击量">&#xe6c1;</i> 276 </p>
+							</li>
+							<li >
+								<a href="#">基于Agent的分布式计算</a>
+								<p class="hits"><i class="Hui-iconfont" title="点击量">&#xe6c1;</i> 276 </p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+				<!--标签-->
+				<div class="bg-fff box-shadow radius mb-20">
+					<div class="tab-category">
+						<a href=""><strong>热门标签</strong></a>
+					</div>
+					<div class="tab-category-item">
+						<div class="tags"> 
+							<a href="">数据挖掘</a> 
+							<a href="">对等网络</a> 
+							<a href="">Bi-RNN</a> 
+							<a href="">NOMA</a> 
+							<a href="">近场通信NFC</a> 
+							<a href="">BP网络</a> 
+							<a href="">数据可视化</a> 
+							<a href="">视频4K技术</a> 
+							<a href="">情景感知</a> 
+							<a href="">同时同频全双工</a> 
+							<a href="">无人驾驶</a> 
+						</div>
+					</div>
+				</div>
+				
+				<!--友情链接-->
+				<div class="bg-fff box-shadow radius mb-20">
+					<div class="tab-category">
+						<a href=""><strong>友情链接</strong></a>
+					</div>
+					<div class="tab-category-item">
+						<span><i class="Hui-iconfont">&#xe6f1;</i><a href="https://bbs.byr.cn" class="btn-link">北邮人论坛</a></span>
+						<span><i class="Hui-iconfont">&#xe6f1;</i><a href="http://tv.byr.cn" class="btn-link">北邮IPTV</a></span>
+						<span><i class="Hui-iconfont">&#xe6f1;</i><a href="http://bt.byr.cn" class="btn-link">北邮人BT</a></span>
+					</div>
+				</div>
+
+				<!--分享-->
+		        <div class="bg-fff box-shadow radius mb-20">
+		            <div class="tab-category">
+		                <a href=""><strong>站点分享</strong></a>
+		            </div>
+		            <div class="tab-category-item">
+		                <div class="bdsharebuttonbox Hui-share">
+		                	<a href="#" class="bds_weixin Hui-iconfont" data-cmd="weixin" title="分享到微信">&#xe694;</a>
+		                	<a href="#" class="bds_sqq Hui-iconfont" data-cmd="sqq" title="分享到QQ好友">&#xe67b;</a> 
+		                	<a href="#" class="bds_tsina Hui-iconfont" data-cmd="tsina" title="分享到新浪微博">&#xe6da;</a> 
+		                </div>
+		            </div>
+		        </div>
+
+		  	</div>
+		  
+		</section>
+	    
+	</div>
+	<footer class="footer mt-20" >
+	    <div class="container-fluid" id="foot">
+	        <p>Copyright &copy; 2017-2018 www.xstt.com <br>
+	            <a href="#" target="_blank">京ICP备00000000号</a>  联系我们：<a href=mailto:xxxxxxxx@bupt.edu.cn target="_blank">xxxxxxxx@bupt.edu.cn</a><br>
+	        </p>
+	    </div>
+	</footer>
+	<script type="text/javascript" src="plugin/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="plugin/layer/3.0/layer.js"></script>
+	<script type="text/javascript" src="plugin/h-ui/js/H-ui.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script src="js/bootstrap.min.js"></script> 
+	<script src="js/jquery.ias.js"></script> 
+	<script src="js/scripts.js"></script>
+	<script> $(function(){ $(window).on("scroll",backToTopFun); backToTopFun(); }); </script>
+	<script type="text/javascript">
+		$(function(){
+ 		var slideHeight = 95; // px
+ 		$('.read-more').each(function(){
+ 			var defHeight = $(this).siblings('.wrap').height();
+	 		if(defHeight >= slideHeight){
+			  	$(this).siblings('.wrap').css('height' , slideHeight + 'px');
+			  	$(this).append('<a href=".">点击查看更多</a>');
+			  	$(this).children('a').click(function(){
+				   	var curHeight = $(this).parent().siblings('.wrap').height();
+				   	if(curHeight == slideHeight){
+					    $(this).parent().siblings('.wrap').animate({
+					        height: defHeight
+				    	}, "normal");
+				    	$(this).html('点击隐藏');
+				    	$(this).parent().siblings('.wrap .gradient').fadeOut();
+				    }else{
+					    $(this).parent().siblings('.wrap').animate({
+					     	height: slideHeight
+					    }, "normal");
+					    $(this).html('点击查看更多');
+					    $(this).parent().siblings('.wrap .gradient').fadeIn();
+				    }
+				    return false;
+			    });  
+			}
+		});
+ 		})
+	</script>
+	<script>
+	$(function(){
+	//标签大小随机
+		$(".tags a").each(function(){
+			var x = 9;
+			var y = 0;
+			var rand = parseInt(Math.random() * (x - y + 1) + y);
+			$(this).addClass("tags"+rand)
+		});
+		
+		$("img.lazyload").lazyload({failurelimit : 3});
+	});
+
+	</script> 
+</body>
+</html>

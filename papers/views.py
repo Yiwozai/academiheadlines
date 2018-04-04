@@ -18,6 +18,20 @@ def home_page(request):
     """
     return render(request, 'papers/home_page.html')
 
+def explore(request):
+    """发现页面
+    """
+    return render(request, 'papers/explore.html')
+
+def explore_hot(request):
+    """热点发现页面
+    """
+    return render(request, 'papers/explore_hot.html')
+
+def attention(request):
+    """关注页面
+    """
+    return render(request, 'papers/attention.html')
 
 # def archives(request):
 #     """搜索结果页面, 从数据库返回的简易版本
@@ -152,6 +166,7 @@ class ArchivesView(View):
     def post(self, request):
         """定义post方法，当请求为POST时触发
         """
+        print(request.POST.dict())
         search_target = request.POST['search_target']
 
         # XXX: 为了更好适配项目，可将reqeusts.get函数覆盖为自定义方法，加入更多异常控制
